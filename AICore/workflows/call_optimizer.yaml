@@ -10,7 +10,7 @@ metadata:
     artifacts.ai.sap.com/housepricemodel.kind: "model" # Suggest the kind of artifact to input.
   labels:
     scenarios.ai.sap.com/id: "sap-optiml-example-deployment"
-    ai.sap.com/version: "1.0"
+    ai.sap.com/version: "1.1"
 spec:
   inputs:
     parameters:
@@ -35,12 +35,12 @@ spec:
         - name: kfserving-container
           image: "docker.io/sapgcoe/sap-optiml-aicore:1.0"
           ports:
-            - containerPort: 5000   # customizable port
+            - containerPort: 9001   # customizable port
               protocol: TCP
           command: ["/bin/sh", "-c"]
           args:
             - >
-              set -e && echo "Starting" && gunicorn --chdir /app/src main:app -b 0.0.0.0:5000 # filename `main` flask variable `app`
+              set -e && echo "Starting" && gunicorn --chdir /app/src main:app -b 0.0.0.0:9001 # filename `main` flask variable `app`
           env:
             - name: greetingmessage # different name to avoid confusion
               value: "{{inputs.parameters.greetmessage}}"
