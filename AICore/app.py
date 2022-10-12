@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 logging.basicConfig(filename='example.log', level=logging.DEBUG)
 
-@app.route('/')
+@app.route('/v1/status')
 def main():
     print("/ called")
 
@@ -22,7 +22,7 @@ coins = {
 }
 
 import optimizer
-@app.route('/callGurobi')
+@app.route('/v1/callGurobi')
 def callGurobi():
     print("/ called callGurobi")
     amount = request.args.get('amount')
@@ -31,7 +31,7 @@ def callGurobi():
     print("amount=" + str(amount))
     return optimizer.make_change_gurobi(int(amount),coins)
 
-@app.route('/callXpress')
+@app.route('/v1/callXpress')
 def callXpress():
     print("/ called callXpress")
     amount = request.args.get('amount')
@@ -40,7 +40,7 @@ def callXpress():
     print("amount=" + str(amount))
     return optimizer.make_change_xpress(int(amount),coins)
 
-@app.route('/callPyomo')
+@app.route('/v1/callPyomo')
 def callPyomo():
     print("/ called callPyomo")
     amount = request.args.get('amount')
