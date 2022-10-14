@@ -51,21 +51,28 @@ def callPyomo():
     return optimizer.make_change_pyomo(int(amount),coins)
 
 @app.route('/v1/callOptimizer')
-def status():
-    optOption = os.environ["Optimizer"]
-    print(f'{optOption}')
-    if amount is None:
-        amount = 1034
-    print("amount=" + str(amount))
-    if optOption == 'Pyomo':
-        return optimizer.make_change_pyomo(int(amount),coins)
-    if optOption == 'Gurobi':
-        return  optimizer.make_change_gurobi(int(amount),coins)
-    if optOption == 'Xpress':
-        return optimizer.make_change_xpress(int(amount),coins)
-    return {'status':'No Optimizer chosen'}
+def callOptimizer():
+    try:
+        optOption = os.environ["optimizer"]
+        print(f'{optOption}')
+        amount = request.args.get('amount')
+        if amount is None:
+            amount = 1034
+        print("amount=" + str(amount))
+        if optOption == 'Pyomo':
+            return optimizer.make_change_pyomo(int(amount),coins)
+        if optOption == 'Gurobi':
+            return  optimizer.make_change_gurobi(int(amount),coins)
+        if optOption == 'Xpress':
+            return optimizer.make_change_xpress(int(amount),coins)
+        
+        return {'status':'No Optimizer chosen'}
+    except Exception as e:
+        print(repr(e))
+        return(repr(e))
+
+   
 
 if __name__ == '__main__':
-    print(f'{os.environ["greetingmessage"]}')
     print("Serving Started")
     app.run(debug=True, host='0.0.0.0',port=9001)
