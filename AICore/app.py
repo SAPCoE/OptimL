@@ -7,8 +7,9 @@ app = Flask(__name__)
 
 logging.basicConfig(filename='example.log', level=logging.DEBUG)
 
+
 @app.route('/v1/status')
-def main():
+def status():
     print("/ called")
 
     return 'Container is up & running'
@@ -48,6 +49,21 @@ def callPyomo():
         amount = 1034
     print("amount=" + str(amount))
     return optimizer.make_change_pyomo(int(amount),coins)
+
+@app.route('/v1/callOptimizer')
+def status():
+    optOption = os.environ["Optimizer"]
+    print(f'{optOption}')
+    if amount is None:
+        amount = 1034
+    print("amount=" + str(amount))
+    if optOption == 'Pyomo':
+        return optimizer.make_change_pyomo(int(amount),coins)
+    if optOption == 'Gurobi':
+        return  optimizer.make_change_gurobi(int(amount),coins)
+    if optOption == 'Xpress':
+        return optimizer.make_change_xpress(int(amount),coins)
+    return {'status':'No Optimizer chosen'}
 
 if __name__ == '__main__':
     print(f'{os.environ["greetingmessage"]}')
