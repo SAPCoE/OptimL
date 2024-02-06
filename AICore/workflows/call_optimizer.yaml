@@ -10,7 +10,7 @@ metadata:
    
   labels:
     scenarios.ai.sap.com/id: "sap-optiml-example-deployment"
-    ai.sap.com/version: "2.0"
+    ai.sap.com/version: "2.1"
 spec:
   inputs:
     parameters:
